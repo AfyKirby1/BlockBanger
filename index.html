@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Banger - Music Maker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="title">🎵 BLOCK BANGER 🎵</h1>
+            <p class="subtitle">Drop the beats, bang the blocks!</p>
+        </header>
+
+        <div class="controls-panel">
+            <div class="main-controls">
+                <button id="playBtn" class="control-btn play-btn">▶️ PLAY</button>
+                <button id="pauseBtn" class="control-btn pause-btn">⏸️ PAUSE</button>
+                <button id="stopBtn" class="control-btn stop-btn">⏹️ STOP</button>
+                <button id="clearBtn" class="control-btn clear-btn">🗑️ CLEAR</button>
+            </div>
+            
+            <div class="tempo-control">
+                <label for="tempoSlider">TEMPO: <span id="tempoValue">120</span> BPM</label>
+                <input type="range" id="tempoSlider" min="60" max="200" value="120" class="slider">
+            </div>
+            
+            <div class="volume-control">
+                <label for="volumeSlider">VOLUME: <span id="volumeValue">70</span>%</label>
+                <input type="range" id="volumeSlider" min="0" max="100" value="70" class="slider">
+            </div>
+            
+            <div class="swing-control">
+                <label for="swingSlider">SWING: <span id="swingValue">0</span>%</label>
+                <input type="range" id="swingSlider" min="0" max="50" value="0" class="slider">
+            </div>
+            
+            <div class="pattern-length-control">
+                <label for="patternLengthSelect">LENGTH: <span id="patternLengthValue">16</span> STEPS</label>
+                <select id="patternLengthSelect" class="length-select">
+                    <option value="8">8 Steps</option>
+                    <option value="16" selected>16 Steps</option>
+                    <option value="32">32 Steps</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="effects-panel">
+            <h3>🎛️ EFFECTS</h3>
+            <div class="effect-controls">
+                <div class="effect-control">
+                    <label for="reverbSlider">REVERB: <span id="reverbValue">0</span>%</label>
+                    <input type="range" id="reverbSlider" min="0" max="100" value="0" class="slider">
+                </div>
+                <div class="effect-control">
+                    <label for="delaySlider">DELAY: <span id="delayValue">0</span>%</label>
+                    <input type="range" id="delaySlider" min="0" max="100" value="0" class="slider">
+                </div>
+                <div class="effect-control">
+                    <label for="filterSlider">FILTER: <span id="filterValue">100</span>%</label>
+                    <input type="range" id="filterSlider" min="10" max="100" value="100" class="slider">
+                </div>
+            </div>
+        </div>
+
+        <div class="mixer-panel">
+            <h3>🎚️ INSTRUMENT MIXER 🎚️</h3>
+            <div class="mixer-tabs">
+                <button class="mixer-tab active" data-tab="drums">🥁 DRUMS</button>
+                <button class="mixer-tab" data-tab="synths">🎛️ SYNTHS</button>
+                <button class="mixer-tab" data-tab="instruments">🎻 INSTRUMENTS</button>
+            </div>
+            
+            <div class="mixer-content">
+                <div class="mixer-group active" id="mixer-drums">
+                    <div class="mixer-controls">
+                        <div class="mixer-channel">
+                            <label>KICK</label>
+                            <input type="range" id="kick-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>SNARE</label>
+                            <input type="range" id="snare-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>HI-HAT</label>
+                            <input type="range" id="hihat-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>OPEN HAT</label>
+                            <input type="range" id="openhat-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>TOM</label>
+                            <input type="range" id="tom-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>FLOOR TOM</label>
+                            <input type="range" id="floortom-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>CRASH</label>
+                            <input type="range" id="crash-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>RIDE</label>
+                            <input type="range" id="ride-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>PERC</label>
+                            <input type="range" id="perc-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>COWBELL</label>
+                            <input type="range" id="cowbell-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>RIMSHOT</label>
+                            <input type="range" id="rimshot-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>SHAKER</label>
+                            <input type="range" id="shaker-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mixer-group" id="mixer-synths">
+                    <div class="mixer-controls">
+                        <div class="mixer-channel">
+                            <label>BASS</label>
+                            <input type="range" id="bass-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>SYNTH</label>
+                            <input type="range" id="synth-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>LEAD</label>
+                            <input type="range" id="lead-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>PAD</label>
+                            <input type="range" id="pad-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>ARP</label>
+                            <input type="range" id="arp-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mixer-group" id="mixer-instruments">
+                    <div class="mixer-controls">
+                        <div class="mixer-channel">
+                            <label>PIANO</label>
+                            <input type="range" id="piano-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>GUITAR</label>
+                            <input type="range" id="guitar-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>VIOLIN</label>
+                            <input type="range" id="violin-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>TRUMPET</label>
+                            <input type="range" id="trumpet-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>ORGAN</label>
+                            <input type="range" id="organ-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>FLUTE</label>
+                            <input type="range" id="flute-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>SAXOPHONE</label>
+                            <input type="range" id="saxophone-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>CELLO</label>
+                            <input type="range" id="cello-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>HARP</label>
+                            <input type="range" id="harp-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                        <div class="mixer-channel">
+                            <label>CLAP</label>
+                            <input type="range" id="clap-volume" min="0" max="200" value="100" class="volume-slider">
+                            <span class="volume-value">100%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sequencer-container">
+            <div class="track-labels">
+                <div class="track-group-label drums">DRUMS</div>
+                <div class="track-label kick">KICK</div>
+                <div class="track-label snare">SNARE</div>
+                <div class="track-label hihat">HI-HAT</div>
+                <div class="track-label openhat">OPEN HAT</div>
+                <div class="track-label tom">TOM</div>
+                <div class="track-label floortom">FLOOR</div>
+                <div class="track-label crash">CRASH</div>
+                <div class="track-label ride">RIDE</div>
+                <div class="track-label perc">PERC</div>
+                <div class="track-label cowbell">COWBELL</div>
+                <div class="track-label rimshot">RIMSHOT</div>
+                <div class="track-label shaker">SHAKER</div>
+                <div class="track-group-label synths">SYNTHS</div>
+                <div class="track-label bass">BASS</div>
+                <div class="track-label synth">SYNTH</div>
+                <div class="track-label lead">LEAD</div>
+                <div class="track-label pad">PAD</div>
+                <div class="track-label arp">ARP</div>
+                <div class="track-group-label instruments">INSTRUMENTS</div>
+                <div class="track-label piano">PIANO</div>
+                <div class="track-label guitar">GUITAR</div>
+                <div class="track-label violin">VIOLIN</div>
+                <div class="track-label trumpet">TRUMPET</div>
+                <div class="track-label organ">ORGAN</div>
+                <div class="track-label flute">FLUTE</div>
+                <div class="track-label saxophone">SAXOPHONE</div>
+                <div class="track-label cello">CELLO</div>
+                <div class="track-label harp">HARP</div>
+                <div class="track-label clap">CLAP</div>
+            </div>
+            
+            <div class="sequencer-right">
+                <div class="sequencer-grid" id="sequencerGrid">
+                    <!-- Grid will be generated by JavaScript -->
+                </div>
+                
+                <div class="step-numbers" id="stepNumbers">
+                    <!-- Step numbers will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <div class="preset-panel">
+            <h3>🎶 GENRE LIBRARY 🎶</h3>
+            <div class="preset-categories">
+                <div class="preset-category">
+                    <h4>Electronic</h4>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-preset="house">🏠 HOUSE</button>
+                        <button class="preset-btn" data-preset="techno">⚡ TECHNO</button>
+                        <button class="preset-btn" data-preset="trance">🌀 TRANCE</button>
+                        <button class="preset-btn" data-preset="dnb">🌊 D&B</button>
+                        <button class="preset-btn" data-preset="jungle">🌴 JUNGLE</button>
+                        <button class="preset-btn" data-preset="dubstep">🎧 DUBSTEP</button>
+                        <button class="preset-btn" data-preset="minimal">🔘 MINIMAL</button>
+                    </div>
+                </div>
+                
+                <div class="preset-category">
+                    <h4>Hip-Hop / Urban</h4>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-preset="trap">🔥 TRAP</button>
+                        <button class="preset-btn" data-preset="drill">🔩 DRILL</button>
+                        <button class="preset-btn" data-preset="phonk">😈 PHONK</button>
+                        <button class="preset-btn" data-preset="grime">🎤 GRIME</button>
+                        <button class="preset-btn" data-preset="lofi">☕ LO-FI</button>
+                        <button class="preset-btn" data-preset="breakbeat">💥 BREAKBEAT</button>
+                    </div>
+                </div>
+
+                <div class="preset-category">
+                    <h4>Pop / Retro</h4>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-preset="disco">✨ DISCO</button>
+                        <button class="preset-btn" data-preset="synthpop">🎹 SYNTHPOP</button>
+                        <button class="preset-btn" data-preset="synthwave">🌆 SYNTHWAVE</button>
+                    </div>
+                </div>
+
+                <div class="preset-category">
+                    <h4>🎻 Realistic Instruments 🎸</h4>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-preset="jazz_quartet">🎷 JAZZ QUARTET</button>
+                        <button class="preset-btn" data-preset="classical_orchestra">🎻 CLASSICAL</button>
+                        <button class="preset-btn" data-preset="country_folk">🤠 COUNTRY FOLK</button>
+                        <button class="preset-btn" data-preset="reggae_vibes">🇯🇲 REGGAE VIBES</button>
+                        <button class="preset-btn" data-preset="smooth_jazz">🎺 SMOOTH JAZZ</button>
+                    </div>
+                </div>
+
+                <div class="preset-category">
+                    <h4>Rock / Funk / Metal</h4>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-preset="rock">🎸 ROCK</button>
+                        <button class="preset-btn" data-preset="funk">🕺 FUNK</button>
+                        <button class="preset-btn" data-preset="metal">🤘 METAL</button>
+                        <button class="preset-btn" data-preset="industrial">🏭 INDUSTRIAL</button>
+                    </div>
+                </div>
+                
+                <div class="preset-category">
+                    <h4>World & Traditional</h4>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-preset="reggae">🇯🇲 REGGAE</button>
+                        <button class="preset-btn" data-preset="ska">🏁 SKA</button>
+                        <button class="preset-btn" data-preset="latin">💃 LATIN</button>
+                        <button class="preset-btn" data-preset="afrobeat">🌍 AFROBEAT</button>
+                        <button class="preset-btn" data-preset="baile funk">🇧🇷 BAILE FUNK</button>
+                    </div>
+                </div>
+
+                <div class="preset-category">
+                    <h4>Jazz / Blues / Other</h4>
+                    <div class="preset-buttons">
+                        <button class="preset-btn" data-preset="jazz">🎷 JAZZ</button>
+                        <button class="preset-btn" data-preset="blues"> harmonica BLUES</button>
+                        <button class="preset-btn" data-preset="country">🤠 COUNTRY</button>
+                        <button class="preset-btn" data-preset="ambient">🌙 AMBIENT</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pattern-panel">
+            <h3>💾 PATTERN MANAGER 💾</h3>
+            <div class="pattern-controls">
+                <input type="text" id="patternName" placeholder="Enter pattern name..." class="pattern-input">
+                <button id="saveBtn" class="control-btn save-btn">💾 SAVE</button>
+                <button id="loadBtn" class="control-btn load-btn">📁 LOAD</button>
+                <button id="exportBtn" class="control-btn export-btn">📤 EXPORT</button>
+                <button id="importBtn" class="control-btn import-btn">📥 IMPORT</button>
+            </div>
+            <div class="saved-patterns" id="savedPatterns">
+                <!-- Saved patterns will appear here -->
+            </div>
+        </div>
+
+        <div class="visualizer" id="visualizer">
+            <div class="beat-indicator" id="beatIndicator"></div>
+        </div>
+    </div>
+
+    <script src="audio-engine.js"></script>
+    <script src="sequencer.js"></script>
+    <script src="presets.js"></script>
+    <script src="app.js"></script>
+</body>
+</html> 
