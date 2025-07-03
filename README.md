@@ -132,8 +132,42 @@
 - 🏠 **House** - Four-on-the-floor with synthesized elements
 - ⚡ **Techno** - Driving beats with industrial sounds
 - 🌀 **Trance** - Uplifting melodies with rhythmic bass
-- 🌊 **Drum & Bass** - Fast breakbeats with sub-bass
+- 🌊 **Drum & Bass (DNB)** - Fast breakbeats with sub-bass
+- 🌴 **Jungle** - Chopped-up breakbeats with reggae influence
 - 🎧 **Dubstep** - Heavy bass drops with syncopated rhythms
+- 🎛️ **Minimal** - Stripped-down techno with subtle elements
+
+### 🎤 **Hip-Hop & Urban**
+- 🔥 **Trap** - Modern hip-hop with hard-hitting drums
+- 🔪 **Drill** - Dark, aggressive beats with heavy bass
+- 👻 **Phonk** - Memphis-inspired with distorted elements
+- 🇬🇧 **Grime** - UK urban with syncopated rhythms
+- ☕ **Lo-Fi** - Chill beats for studying and relaxation
+- 💥 **Breakbeat** - Classic breakbeats with modern twist
+
+### 🎸 **Rock, Funk & Metal**
+- 🎸 **Rock** - Classic rock with guitar-driven patterns
+- 🎺 **Funk** - Groove-heavy with syncopated rhythms
+- 🤘 **Metal** - Heavy, aggressive with double-kick patterns
+- 🏭 **Industrial** - Mechanical, harsh electronic-rock fusion
+
+### 🕺 **Pop & Retro**
+- 🪩 **Disco** - Classic 70s dance with four-on-the-floor
+- 🎹 **Synthpop** - 80s-inspired with synthesizer leads
+- 🌆 **Synthwave** - Nostalgic 80s with neon aesthetics
+
+### 🌍 **World & Traditional**
+- 🇯🇲 **Reggae** - Island rhythms with off-beat emphasis
+- 🎺 **Ska** - Upbeat with horn sections and upstrokes
+- 🌶️ **Latin** - Salsa and Latin percussion patterns
+- 🥁 **Afrobeat** - West African rhythms with polyrhythmic drums
+- 🇧🇷 **Baile Funk** - Brazilian funk with heavy bass
+
+### 🎷 **Jazz, Blues & Other**
+- 🎷 **Jazz** - Swing rhythms with sophisticated harmonies
+- 🎸 **Blues** - Classic blues with guitar and harmonica
+- 🤠 **Country** - Americana with acoustic guitar and fiddle
+- 🌙 **Ambient** - Atmospheric textures for relaxation
 
 ### 🎻 **Realistic Instruments Showcase**
 - 🎷 **Jazz Quartet** - Saxophone, piano, bass, and drums
@@ -141,11 +175,6 @@
 - 🤠 **Country Folk** - Guitar-driven with violin accompaniment
 - 🇯🇲 **Reggae Vibes** - Guitar and organ with island rhythm
 - 🎺 **Smooth Jazz** - Piano, saxophone, and trumpet ensemble
-
-### 🎤 **Urban & Hip-Hop**
-- 🔥 **Trap** - Modern hip-hop with hard-hitting drums
-- ☕ **Lo-Fi** - Chill beats for studying and relaxation
-- 💥 **Breakbeat** - Classic breakbeats with modern twist
 
 ---
 
@@ -290,7 +319,17 @@ BlockBanger/
 
 ## 📜 Version History
 
-### 🎻 **v4.0 - Realistic Instruments Revolution** *(Latest)*
+### 🎵 **v5.0 - Complete Preset Library** *(Latest)*
+- 🌟 **30+ Musical Presets**: Comprehensive library across all genres
+- 🎵 **Electronic Expansion**: House, Techno, Trance, DNB, Jungle, Dubstep, Minimal
+- 🎤 **Hip-Hop Collection**: Trap, Drill, Phonk, Grime, Lo-Fi, Breakbeat
+- 🎸 **Rock & Metal**: Rock, Funk, Metal, Industrial patterns
+- 🕺 **Pop & Retro**: Disco, Synthpop, Synthwave classics
+- 🌍 **World Music**: Reggae, Ska, Latin, Afrobeat, Baile Funk
+- 🎷 **Jazz & Blues**: Jazz, Blues, Country, Ambient styles
+- 🎻 **Realistic Showcases**: 5 orchestral and acoustic arrangements
+
+### 🎻 **v4.0 - Realistic Instruments Revolution**
 - ✨ **8 New Realistic Instruments**: Guitar, Violin, Trumpet, Organ, Flute, Saxophone, Cello, Harp
 - 🎚️ **Professional Mixer Console**: Individual volume controls for all 27 instruments
 - 🎵 **5 New Musical Presets**: Jazz, Classical, Country, Reggae, Smooth Jazz  
