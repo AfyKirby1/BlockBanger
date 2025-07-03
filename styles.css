@@ -126,6 +126,24 @@ header {
     border-color: #e74c3c;
 }
 
+.stop-btn.active {
+    background-color: #ff4d4d;
+    box-shadow: 0 0 15px #ff4d4d;
+}
+
+.record-btn {
+    color: #ff4d4d;
+}
+
+.record-btn.active {
+    background-color: #ff4d4d;
+    color: white;
+    box-shadow: 0 0 15px #ff4d4d;
+}
+
+.clear-btn {
+    background-color: #6c757d;
+}
 
 .tempo-control, .volume-control, .swing-control, .pattern-length-control {
     display: flex;
@@ -582,6 +600,7 @@ header {
     background-color: var(--accent-color);
     box-shadow: 0 0 10px var(--accent-color);
     transition: transform 0.1s linear;
+    transform: translateY(0);
 }
 
 @keyframes slideIn {
@@ -737,4 +756,14 @@ header {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+#visualizer {
+    width: 100%;
+    height: 100px;
+    background-color: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 8px;
+    margin-top: 20px;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
 } 

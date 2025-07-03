@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.pauseBtn = document.getElementById('pauseBtn');
             this.stopBtn = document.getElementById('stopBtn');
             this.clearBtn = document.getElementById('clearBtn');
+            this.recordBtn = document.getElementById('recordBtn');
             this.tempoSlider = document.getElementById('tempoSlider');
             this.tempoValue = document.getElementById('tempoValue');
             this.volumeSlider = document.getElementById('volumeSlider');
@@ -71,6 +72,9 @@ document.addEventListener('DOMContentLoaded', () => {
             this.patternLengthSelect = document.getElementById('patternLengthSelect');
             this.patternLengthValue = document.getElementById('patternLengthValue');
             
+            this.visualizerCanvas = document.getElementById('visualizer');
+            this.visualizerCtx = this.visualizerCanvas.getContext('2d');
+
             // Mixer elements
             this.mixerTabs = document.querySelectorAll('.mixer-tab');
             this.mixerGroups = document.querySelectorAll('.mixer-group');
@@ -82,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.pauseBtn.addEventListener('click', () => this.pause());
             this.stopBtn.addEventListener('click', () => this.stop());
             this.clearBtn.addEventListener('click', () => this.sequencer.clear());
+            this.recordBtn.addEventListener('click', () => this.toggleRecording());
             
             this.tempoSlider.addEventListener('input', (e) => {
                 this.setTempo(parseInt(e.target.value, 10));
@@ -166,6 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.playBtn.classList.add('active');
             this.pauseBtn.classList.remove('active');
             this.tick();
+            this.drawVisualizer();
         }
         
         pause() {
@@ -180,6 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
             this.pause();
             this.currentStep = 0;
             this.sequencer.highlightStep(null); // Clear highlight
+            this.clearVisualizer();
         }
 
         tick() {
@@ -432,6 +439,65 @@ document.addEventListener('DOMContentLoaded', () => {
                 notification.style.animation = 'slideOut 0.3s ease';
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
+        }
+
+        drawVisualizer() {
+            if (!this.isPlaying) return;
+
+            const bufferLength = this.audioEngine.analyser.frequencyBinCount;
+            const dataArray = new Uint8Array(bufferLength);
+            this.audioEngine.analyser.getByteTimeDomainData(dataArray);
+
+            this.visualizerCtx.fillStyle = 'rgb(26, 26, 26)';
+            this.visualizerCtx.fillRect(0, 0, this.visualizerCanvas.width, this.visualizerCanvas.height);
+
+            this.visualizerCtx.lineWidth = 2;
+            this.visualizerCtx.strokeStyle = 'rgb(0, 255, 255)';
+
+            this.visualizerCtx.beginPath();
+
+            const sliceWidth = this.visualizerCanvas.width * 1.0 / bufferLength;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i++) {
+                const v = dataArray[i] / 128.0;
+                const y = v * this.visualizerCanvas.height / 2;
+
+                if (i === 0) {
+                    this.visualizerCtx.moveTo(x, y);
+                } else {
+                    this.visualizerCtx.lineTo(x, y);
+                }
+
+                x += sliceWidth;
+            }
+
+            this.visualizerCtx.lineTo(this.visualizerCanvas.width, this.visualizerCanvas.height / 2);
+            this.visualizerCtx.stroke();
+
+            requestAnimationFrame(() => this.drawVisualizer());
+        }
+
+        clearVisualizer() {
+            this.visualizerCtx.fillStyle = 'rgb(26, 26, 26)';
+            this.visualizerCtx.fillRect(0, 0, this.visualizerCanvas.width, this.visualizerCanvas.height);
+        }
+
+        toggleRecording() {
+            if (!this.audioEngine.isInitialized) {
+                this.showNotification("Start playback to initialize audio before recording.", "warning");
+                return;
+            }
+
+            if (this.audioEngine.isRecording) {
+                this.audioEngine.stopRecording();
+                this.recordBtn.classList.remove('active');
+                this.showNotification("Recording saved to your downloads folder.", "success");
+            } else {
+                this.audioEngine.startRecording();
+                this.recordBtn.classList.add('active');
+                this.showNotification("Recording started...", "info");
+            }
         }
     }
 

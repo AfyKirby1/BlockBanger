@@ -9,7 +9,11 @@ class AudioEngine {
         this.wetGain = null;
         this.delay = null;
         this.reverb = null;
+        this.analyser = null;
         this.isInitialized = false;
+        this.isRecording = false;
+        this.mediaRecorder = null;
+        this.recordedChunks = [];
         
         // Individual instrument volumes (0.0 to 2.0, default 1.0)
         this.instrumentVolumes = {
@@ -60,6 +64,10 @@ class AudioEngine {
         this.filterNode.frequency.value = 20000;
         this.filterNode.Q.value = 1;
         
+        // Create Analyser
+        this.analyser = this.audioContext.createAnalyser();
+        this.analyser.fftSize = 2048;
+        
         // Create delay effect
         this.delay = this.audioContext.createDelay(1.0);
         this.delay.delayTime.value = 0.2;
@@ -79,8 +87,34 @@ class AudioEngine {
         
         // Connect the audio chain:
         this.masterGain.connect(this.filterNode);
-        this.filterNode.connect(this.dryGain);
+        this.filterNode.connect(this.analyser);
+        this.analyser.connect(this.dryGain);
+        
         this.dryGain.connect(this.audioContext.destination);
+        
+        // --- Recording Setup ---
+        const dest = this.audioContext.createMediaStreamDestination();
+        this.masterGain.connect(dest);
+        this.mediaRecorder = new MediaRecorder(dest.stream);
+
+        this.mediaRecorder.ondataavailable = event => {
+            if (event.data.size > 0) {
+                this.recordedChunks.push(event.data);
+            }
+        };
+
+        this.mediaRecorder.onstop = () => {
+            const blob = new Blob(this.recordedChunks, { type: 'audio/wav' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.style.display = 'none';
+            a.href = url;
+            a.download = `BlockBanger-Recording-${new Date().toISOString()}.wav`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            this.recordedChunks = [];
+        };
         
         // Delay path
         this.filterNode.connect(this.delay);
@@ -94,6 +128,21 @@ class AudioEngine {
         this.reverbGain.connect(this.wetGain);
         
         this.wetGain.connect(this.audioContext.destination);
+    }
+
+    startRecording() {
+        if (this.isRecording) return;
+        this.isRecording = true;
+        this.recordedChunks = [];
+        this.mediaRecorder.start();
+        console.log("Recording started");
+    }
+
+    stopRecording() {
+        if (!this.isRecording) return;
+        this.isRecording = false;
+        this.mediaRecorder.stop();
+        console.log("Recording stopped");
     }
 
     createReverb() {

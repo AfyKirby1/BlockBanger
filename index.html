@@ -22,6 +22,7 @@
                 <button id="playBtn" class="control-btn play-btn">▶️ PLAY</button>
                 <button id="pauseBtn" class="control-btn pause-btn">⏸️ PAUSE</button>
                 <button id="stopBtn" class="control-btn stop-btn">⏹️ STOP</button>
+                <button id="recordBtn" class="control-btn record-btn">🔴 REC</button>
                 <button id="clearBtn" class="control-btn clear-btn">🗑️ CLEAR</button>
             </div>
             
@@ -369,13 +370,18 @@
             </div>
         </div>
 
-        <div class="visualizer" id="visualizer">
-            <div class="beat-indicator" id="beatIndicator"></div>
-        </div>
+        <canvas id="visualizer" width="1024" height="100"></canvas>
     </div>
 
     <script src="audio-engine.js"></script>
     <script src="sequencer.js"></script>
+    <script src="presets/electronic.js"></script>
+    <script src="presets/realistic_instruments.js"></script>
+    <script src="presets/hiphop.js"></script>
+    <script src="presets/pop_retro.js"></script>
+    <script src="presets/rock_funk_metal.js"></script>
+    <script src="presets/world_traditional.js"></script>
+    <script src="presets/jazz_blues_other.js"></script>
     <script src="presets.js"></script>
     <script src="app.js"></script>
 </body>
