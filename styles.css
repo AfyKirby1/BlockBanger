@@ -57,6 +57,18 @@ header {
     margin: 5px 0 0;
 }
 
+.usage-hints {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    font-weight: 400;
+}
+
+.usage-hints strong {
+    color: var(--accent-color);
+}
+
 .controls-panel {
     display: flex;
     justify-content: space-between;
@@ -172,7 +184,7 @@ header {
 .sequencer-container {
     display: grid;
     grid-template-columns: 120px 1fr;
-    gap: 10px;
+    gap: 8px;
     align-items: start;
     margin-bottom: 20px;
     background: #1a1a1a;
@@ -190,7 +202,7 @@ header {
         40px 40px 40px 40px 40px    /* 5 synth tracks: bass, synth, lead, pad, arp */
         25px    /* INSTRUMENTS label */
         40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;    /* 10 instrument tracks: piano, guitar, violin, trumpet, organ, flute, saxophone, cello, harp, clap */
-    gap: 2px;
+    gap: 4px;
     font-size: 0.8em;
     font-weight: bold;
     text-align: right;
@@ -279,8 +291,9 @@ header {
         40px 40px 40px 40px 40px    /* 5 synth tracks */
         25px    /* Space for INSTRUMENTS label */
         40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;    /* 10 instrument tracks */
-    gap: 2px;
+    gap: 4px;
     margin-bottom: 5px;
+    overflow: hidden; /* Prevent glow bleeding outside grid */
 }
 
 .grid-spacer {
@@ -298,11 +311,15 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none; /* Prevent text selection during drag */
+    position: relative;
 }
 
 .block.active {
     background-color: var(--block-active-color);
-    box-shadow: 0 0 10px var(--block-active-color);
+    box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.2), 
+                0 0 6px rgba(233, 69, 96, 0.6);
+    border: 1px solid rgba(233, 69, 96, 0.8);
 }
 
 .block.current-step {
@@ -311,10 +328,39 @@ header {
     transform: scale(1.02);
 }
 
+/* Drag interaction styles */
+.block.hover {
+    transform: scale(1.02);
+    border: 1px solid var(--accent-color);
+    box-shadow: inset 0 0 8px rgba(233, 69, 96, 0.4);
+    z-index: 2;
+    position: relative;
+}
+
+.sequencer-grid.dragging {
+    cursor: grabbing;
+}
+
+.sequencer-grid.dragging.erase-mode {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="red" d="M9 3v18H7V3h2zm4 0v18h-2V3h2zm4 0v18h-2V3h2z"/></svg>') 12 12, auto;
+}
+
+.sequencer-grid.dragging .block {
+    transition: none; /* Disable transitions during drag for responsiveness */
+}
+
+.sequencer-grid.dragging .block:hover {
+    transform: scale(1.02);
+    border: 1px solid var(--accent-color);
+    box-shadow: inset 0 0 10px rgba(233, 69, 96, 0.6);
+    z-index: 2;
+    position: relative;
+}
+
 .step-numbers {
     display: grid;
     grid-template-columns: repeat(16, 1fr); /* Will be updated dynamically */
-    gap: 5px;
+    gap: 4px;
     padding: 0;
     margin-top: 0;
 }

@@ -44,6 +44,7 @@ class Sequencer {
 
         this.createGrid();
         this.addGridEventListeners();
+        this.addGlobalEventListeners();
     }
 
     createInitialGridState() {
@@ -93,17 +94,139 @@ class Sequencer {
     }
 
     addGridEventListeners() {
-        this.gridElement.addEventListener('click', (e) => {
+        // Drag state tracking
+        this.isDragging = false;
+        this.dragMode = null; // 'paint' or 'erase'
+        this.dragStartValue = null; // The initial state we're setting
+        this.hasActuallyDragged = false; // Track if mouse actually moved during drag
+        this.mouseDownBlock = null; // Track which block was initially clicked
+        
+        // Mouse down - start potential drag operation
+        this.gridElement.addEventListener('mousedown', (e) => {
             if (e.target.classList.contains('block')) {
+                e.preventDefault(); // Prevent text selection
+                this.isDragging = true;
+                this.hasActuallyDragged = false;
+                
                 const row = parseInt(e.target.dataset.row, 10);
                 const step = parseInt(e.target.dataset.step, 10);
-                this.toggleBlock(row, step);
+                this.mouseDownBlock = { row, step };
+                
+                // Determine drag mode based on modifier keys or mouse button
+                if (e.button === 2 || e.shiftKey) {
+                    // Right click or Shift + click = erase mode
+                    this.dragMode = 'erase';
+                    this.dragStartValue = false;
+                } else {
+                    // Left click = paint mode (toggle current state)
+                    this.dragMode = 'paint';
+                    this.dragStartValue = !this.gridState[row][step];
+                }
+                
+                // Don't apply action immediately - wait to see if it's a drag or click
             }
         });
+        
+        // Mouse move - continue drag operation
+        this.gridElement.addEventListener('mousemove', (e) => {
+            if (this.isDragging && e.target.classList.contains('block')) {
+                const row = parseInt(e.target.dataset.row, 10);
+                const step = parseInt(e.target.dataset.step, 10);
+                
+                // Check if we've actually moved to a different block
+                if (!this.hasActuallyDragged && this.mouseDownBlock && 
+                    (row !== this.mouseDownBlock.row || step !== this.mouseDownBlock.step)) {
+                    // This is the first movement - start actual dragging
+                    this.hasActuallyDragged = true;
+                    
+                    // Apply visual feedback for dragging
+                    this.gridElement.classList.add('dragging');
+                    if (this.dragMode === 'erase') {
+                        this.gridElement.classList.add('erase-mode');
+                    }
+                    
+                    // Apply action to the original clicked block
+                    this.setBlock(this.mouseDownBlock.row, this.mouseDownBlock.step, this.dragStartValue);
+                }
+                
+                if (this.hasActuallyDragged) {
+                    // Apply the drag action to the current block
+                    this.setBlock(row, step, this.dragStartValue);
+                }
+            }
+            
+            // Add hover effect for all blocks during potential drag
+            if (e.target.classList.contains('block') && !this.isDragging) {
+                // Clear previous hover
+                this.gridElement.querySelectorAll('.block.hover').forEach(block => {
+                    block.classList.remove('hover');
+                });
+                // Add hover to current block
+                e.target.classList.add('hover');
+            }
+        });
+        
+        // Mouse up - end drag operation or handle click
+        this.gridElement.addEventListener('mouseup', (e) => {
+            if (this.isDragging) {
+                if (!this.hasActuallyDragged && this.mouseDownBlock && e.target.classList.contains('block')) {
+                    // This was a click, not a drag - handle as simple toggle
+                    const row = parseInt(e.target.dataset.row, 10);
+                    const step = parseInt(e.target.dataset.step, 10);
+                    
+                    // Only toggle if we're clicking the same block we started on
+                    if (row === this.mouseDownBlock.row && step === this.mouseDownBlock.step) {
+                        this.toggleBlock(row, step);
+                    }
+                }
+                
+                // Reset all drag state
+                this.isDragging = false;
+                this.dragMode = null;
+                this.dragStartValue = null;
+                this.hasActuallyDragged = false;
+                this.mouseDownBlock = null;
+                
+                // Remove visual feedback
+                this.gridElement.classList.remove('dragging', 'erase-mode');
+            }
+        });
+        
+        // Mouse leave - end drag operation when leaving grid
+        this.gridElement.addEventListener('mouseleave', (e) => {
+            if (this.isDragging) {
+                // Reset all drag state
+                this.isDragging = false;
+                this.dragMode = null;
+                this.dragStartValue = null;
+                this.hasActuallyDragged = false;
+                this.mouseDownBlock = null;
+                
+                // Remove visual feedback
+                this.gridElement.classList.remove('dragging', 'erase-mode');
+            }
+            
+            // Clear hover effects
+            this.gridElement.querySelectorAll('.block.hover').forEach(block => {
+                block.classList.remove('hover');
+            });
+        });
+        
+        // Prevent context menu on right click
+        this.gridElement.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
+        
+
     }
 
     toggleBlock(row, step) {
         this.gridState[row][step] = !this.gridState[row][step];
+        this.updateGridUI();
+    }
+    
+    setBlock(row, step, value) {
+        this.gridState[row][step] = value;
         this.updateGridUI();
     }
 
@@ -138,6 +261,23 @@ class Sequencer {
             }
         }
         this.updateGridUI();
+    }
+
+    addGlobalEventListeners() {
+        // Global mouse up event to handle cases where mouse is released outside the grid
+        document.addEventListener('mouseup', (e) => {
+            if (this.isDragging) {
+                // Reset all drag state
+                this.isDragging = false;
+                this.dragMode = null;
+                this.dragStartValue = null;
+                this.hasActuallyDragged = false;
+                this.mouseDownBlock = null;
+                
+                // Remove visual feedback
+                this.gridElement.classList.remove('dragging', 'erase-mode');
+            }
+        });
     }
 
     setPatternLength(newSteps) {
